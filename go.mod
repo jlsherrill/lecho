@@ -1,4 +1,4 @@
-module github.com/ziflex/lecho/v3
+module github.com/content-services/lecho/v3
 
 go 1.17
 
