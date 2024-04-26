@@ -2,12 +2,18 @@
 
 [Zerolog](https://github.com/rs/zerolog) wrapper for [Echo](https://echo.labstack.com/) web framework.
 
+A fork of https://github.com/ziflex/lecho
+
+Why was this forked?
+* The original repo did not seem to be updating dependencies very often
+* We needed some customization for our application that did not make sense more generically
+
 ## Installation
 
 For Echo v4:
 
 ```
-go get github.com/ziflex/lecho/v3
+go get github.com/content-services/lecho/v3
 ```
 
 For Echo v3:
@@ -25,7 +31,7 @@ import (
 	"os"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/ziflex/lecho/v3"
+	"github.com/content-services/lecho/v3"
 )
 
 func main() {
@@ -43,7 +49,7 @@ import (
 	"os"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/ziflex/lecho/v3"
+	"github.com/content-services/lecho/v3"
         "github.com/rs/zerolog"
 )
 
@@ -63,7 +69,7 @@ import (
 	"os",
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/ziflex/lecho/v3"
+	"github.com/content-services/lecho/v3"
 )
 
 func main() {
@@ -91,7 +97,7 @@ import (
 	"os",
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/ziflex/lecho/v3"
+	"github.com/content-services/lecho/v3"
 	"github.com/rs/zerolog"
 )
 
@@ -164,7 +170,7 @@ import (
     "github.com/labstack/echo"
     "github.com/labstack/echo/middleware"
     "github.com/labstack/gommon/log"
-    "github.com/ziflex/lecho/v3"
+    "github.com/content-services/lecho/v3"
 )
 
 func main() {

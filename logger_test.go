@@ -9,7 +9,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ziflex/lecho/v3"
+	"github.com/content-services/lecho/v3"
 )
 
 func TestNew(t *testing.T) {
@@ -69,7 +69,7 @@ func TestLogger_SetPrefix(t *testing.T) {
 	//	assert.Equal(
 	//		t,
 	//		`{"level":"-","message":"t-e-s-t"}
-	//`,
+	// `,
 	//		b.String(),
 	//	)
 	//
@@ -81,7 +81,7 @@ func TestLogger_SetPrefix(t *testing.T) {
 	//	assert.Equal(
 	//		t,
 	//		`{"prefix":"foo","level":"-","message":"test"}
-	//`,
+	// `,
 	//		b.String(),
 	//	)
 	//
@@ -93,7 +93,7 @@ func TestLogger_SetPrefix(t *testing.T) {
 	//	assert.Equal(
 	//		t,
 	//		`{"prefix":"bar","level":"-","message":"test-test"}
-	//`,
+	// `,
 	//		b.String(),
 	//	)
 }
