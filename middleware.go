@@ -31,6 +31,10 @@ type (
 		NestKey string
 		// HandleError indicates whether to propagate errors up the middleware chain, so the global error handler can decide appropriate status code.
 		HandleError bool
+		// For long-running requests that take longer than this limit, log at a different level.  Ignored by default
+		RequestLatencyLimit time.Duration
+		// The level to log at if RequestLatencyLimit is exceeded
+		RequestLatencyLevel zerolog.Level
 	}
 
 	// Enricher is a function that can be used to enrich the logger with additional information.
@@ -125,13 +129,23 @@ func Middleware(config Config) echo.MiddlewareFunc {
 				}
 			}
 
-			stop := time.Now()
+			// lookup response again in case it was modified
+			res = c.Response()
 
+			stop := time.Now()
+			latency := stop.Sub(start)
 			var mainEvt *zerolog.Event
-			if err != nil {
+			if err != nil && res.Status >= 500 {
 				mainEvt = logger.log.Err(err)
+			} else if config.RequestLatencyLimit != 0 && latency > config.RequestLatencyLimit {
+				mainEvt = logger.log.WithLevel(config.RequestLatencyLevel)
 			} else {
 				mainEvt = logger.log.WithLevel(logger.log.GetLevel())
+			}
+
+			// If we have an error that isn't 500, log error as a message
+			if err != nil && res.Status < 500 {
+				mainEvt = mainEvt.Str("error", err.Error())
 			}
 
 			var evt *zerolog.Event
@@ -148,8 +162,8 @@ func Middleware(config Config) echo.MiddlewareFunc {
 			evt.Str("user_agent", req.UserAgent())
 			evt.Int("status", res.Status)
 			evt.Str("referer", req.Referer())
-			evt.Dur("latency", stop.Sub(start))
-			evt.Str("latency_human", stop.Sub(start).String())
+			evt.Dur("latency", latency)
+			evt.Str("latency_human", latency.String())
 
 			cl := req.Header.Get(echo.HeaderContentLength)
 			if cl == "" {
